@@ -1,1 +1,2 @@
-# FTP-Server-in-C
+# FTP-Server
+FTP Server based on C and C#
