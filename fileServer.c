@@ -9,12 +9,10 @@
 #include <dirent.h>
 #include <unistd.h>
 
-
-
-#define PORT htons(4444)
+#define PORT htons(4445)
 
 void sendFilesList(int sckt){
-     DIR *mydir;
+    DIR *mydir;
     struct dirent *myfile;
     struct stat mystat;
     int counter = 0;
@@ -56,7 +54,7 @@ void sendFilesList(int sckt){
 
 }
 
-void ObsluzPolaczenie(int sckt)
+void handleConnection(int sckt)
 {
     char sciezka[512];
     long long file_len, sentBytes, totalSendBytes, readBytes;
@@ -68,7 +66,6 @@ void ObsluzPolaczenie(int sckt)
     memset(sciezka, 0, 512);
     if (recv(sckt, sciezka, 512, 0) <= 0)
     {
-        printf("Blad przy odczycie sciezki\n\n");
         return;
     }
     
@@ -181,8 +178,7 @@ int main(void)
             memset(command, 0, 10);
             if (recv(sckt_client, command, 10, 0) <= 0)
             {
-            printf("\nBlad przy odczycie sciezki\n");
-            exit(1);
+                exit(1);
             }
 
             else {
@@ -198,19 +194,14 @@ int main(void)
                     
                 }
                 if(strcmp(command, ":download") == 0){
-                    ObsluzPolaczenie(sckt_client);
+                    handleConnection(sckt_client);
+                    }
 
-                }
-
-
-            }
-            
-
+                 }
             }
         }
         else
         {
-            /* proces macierzysty */
             continue;
         }
     }
