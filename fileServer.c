@@ -9,7 +9,7 @@
 #include <dirent.h>
 #include <unistd.h>
 
-#define PORT htons(4445)
+#define PORT htons(4444)
 
 void sendFilesList(int sckt){
     DIR *mydir;
